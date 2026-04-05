@@ -22,3 +22,6 @@ class Article(models.Model):
     banniere = models.ImageField(blank=True)
     categories = models.ManyToManyField(Categorie)
     createur = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+    
