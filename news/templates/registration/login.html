@@ -4,22 +4,33 @@
      <div class="col-12 col-md-6 col-lg-4">
         <div class="card shadow">
             <div class="card-body">
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                            {{ form.errors }}
+                    </div>
+                {% endif %}
                 <h3 class="card-title text-center mb-4">Connexion</h3>
                 <form method="post">
                     {% csrf_token %}
-                    
-                    <div class="mb-3 form-control">
-                        <label for="{{ form.username.id_for_label }}" >Email</label><br>
+                        
+                    <div class="mb-3">
+                        {{ form.username.label_tag }}
                         {{ form.username }}
                     </div>
-
-                    <div class="form-control ">
-                        <label for="{{ form.password.id_for_label }}">Mot de passe</label><br>
+                
+                    <div class="mb-3">
+                        {{ form.password.label_tag }}
                         {{ form.password }}
                     </div>
+                    <button type="submit" class="btn btn-primary w-100">Se connecter</button>
                 </form>
-                <button type="submit" class="btn btn-primary btn-lg">Se connecter</button>
+                <div class="text-center mt-3">
+                    <small>Pas de compte ? <a href="{% url 'inscription' %}">Inscrivez vous</a></small>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+
+
