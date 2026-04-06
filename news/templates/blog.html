@@ -1,0 +1,26 @@
+{% extends 'base.html' %} 
+
+{% block content %} 
+
+{% for article in articles %}
+<div class="container">
+  <div class="row">
+    <div class="col-lg col-sm-6 mt-4">
+      <div class="card" style="width: 18rem">
+        <img
+          src="{{ article.banniere.url }}"
+          class="card-img-top"
+          alt="banniere"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ article.titre }}</h5>
+          <p class="card-text">{{ article.contenu|truncatewords:30 }}</p>
+          <p>
+            <a href="{% url 'detail' article.id %}" class="btn btn-primary">Voir plus</a>
+          </p>
+        </div>
+      </div>
+      {% endfor %} {% endblock %}
+    </div>
+  </div>
+</div>

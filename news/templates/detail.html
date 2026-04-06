@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="ratio ratio-21x9"> <img src="{{ article.banniere.url }}" 
+                     class="img-fluid rounded shadow-sm object-fit-cover" 
+                     alt="{{ article.titre }}"
+                     style="object-fit: cover;">
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <article>
+                <h1 class="display-4 fw-bold mb-3">{{ article.titre }}</h1>
+                
+                <div class="d-flex gap-2 mb-4">
+                    {% for cat in article.categories.all %}
+                        <span class="badge bg-primary">{{ cat.nom }}</span>
+                    {% endfor %}
+                    <small class="text-muted">Publié le {{ article.date_creation|date:"d F Y" }}</small>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="lead lh-base" style="text-align: justify;">
+                    {{ article.contenu|linebreaks }}
+                </div>
+            </article>
+
+            <div class="mt-5 pt-3 border-top">
+                <a href="{% url 'liste_articles' %}" class="btn btn-outline-secondary">
+                    ← Retour aux articles
+                </a>
+            </div>
+            <hr class="my-5">
+
+            <section class="comments-section mb-5">
+                <h3 class="mb-4">
+                    {{ article.commentaires.count }} Commentaire
+                </h3>
+
+                {% for commentaire in article.commentaires.all %}
+                    <div class="card border-0 shadow-sm mb-3 bg-light">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="card-subtitle fw-bold text-primary">
+                                    {{ commentaire.commentateur.username }}
+                                </h6>
+                                <small class="text-muted">
+                                    {{ commentaire.date_creation|date:"d M Y, H:i" }}
+                                </small>
+                            </div>
+                            <p class="card-text text-dark">
+                                {{ commentaire.contenu }}
+                            </p>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="alert alert-info text-center py-4">
+                        <p class="mb-0">Aucun commentaire pour le moment !</p>
+                    </div>
+                {% endfor %}
+
+                <div class="d-grid gap-2 mt-4">
+                    <a href="#" class="btn btn-primary">Ajouter un commentaire</a>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}
