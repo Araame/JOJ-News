@@ -59,16 +59,24 @@
                                 {{ commentaire.contenu }}
                             </p>
                         </div>
+                        {% if user == commentaire.commentateur %}
+                <div class="mt-2">
+                    <a href="{% url 'modification_com' commentaire.pk %}" class="btn btn-sm btn-outline-warning">Modifier</a>
+                    <a href="{% url 'suppression_com' commentaire.pk %}" class="btn btn-sm btn-outline-danger">Supprimer</a>
+                </div>
+                {% endif %}
                     </div>
                 {% empty %}
                     <div class="alert alert-info text-center py-4">
                         <p class="mb-0">Aucun commentaire pour le moment !</p>
                     </div>
-                {% endfor %}
 
+                {% endfor %}
                 <div class="d-grid gap-2 mt-4">
-                    <a href="#" class="btn btn-primary">Ajouter un commentaire</a>
+                    <a href="{% url 'creation_com' article.pk %}" class="btn btn-primary">Ajouter un commentaire</a>
                 </div>
+               
+                
             </section>
         </div>
     </div>

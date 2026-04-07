@@ -36,4 +36,33 @@ class Article(models.Model):
         return self.titre
 
 
-    
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.core.mail import send_mail
+from django.conf import settings
+from .models import Commentaire
+
+@receiver(post_save, sender=Commentaire)
+def notifier_admin_nouveau_commentaire(sender, instance, created, **kwargs):
+    if created:
+        sujet = f"Nouveau commentaire sur l'article : {instance.article.titre}"
+        message = f"""
+        Bonjour Admin,
+
+        Un nouveau commentaire a été publié sur votre site des JOJ.
+
+        Auteur : {instance.commentateur.username}
+        Article : {instance.article.titre}
+        Contenu : 
+        "{instance.contenu}"
+
+        Lien vers l'administration : http://127.0.0.1:8000/admin/
+        """
+        
+        send_mail(
+            sujet,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [settings.ADMIN_EMAIL],
+            fail_silently=False,
+        )

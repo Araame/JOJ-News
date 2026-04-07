@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 card shadow-sm p-4">
+            <h2 class="mb-4">Commentaire</h2>
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label class="form-label">Contenu</label>
+                    <textarea name="contenu" class="form-control" rows="4" required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" w-100">Publier le commentaire</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
