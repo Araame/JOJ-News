@@ -6,6 +6,7 @@ from django.views.generic import UpdateView, DeleteView
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
+from django.core.paginator import Paginator
 
 # Create your views here.
 def accueil(request):
@@ -28,6 +29,7 @@ class ListArticleView(ListView):
     model = Article
     template_name = 'blog.html'  
     context_object_name = 'articles'
+    paginate_by = 1
 
     def get_queryset(self):
         return Article.objects.prefetch_related('commentaires').all()
